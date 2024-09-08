@@ -61,10 +61,14 @@ function loginUser() {
  const username = document.getElementById('username').value;
  const password = document.getElementById('password').value;
 
+ console.log('Attempting to log in with', { username, password });
+
  Parse.User.logIn(username, password).then((user) => {
+ console.log('Login successful', user);
  currentUser = user;
  showLandingPage();
  }).catch((error) => {
+ console.log('Login error', error);
  alert('Error: ' + error.message);
  });
 }
