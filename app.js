@@ -64,11 +64,11 @@ function loginUser() {
  console.log('Attempting to log in with', { username, password });
 
  Parse.User.logIn(username, password).then((user) => {
- console.log('Login successful', user);
+ console.log('Login successful:', user);
  currentUser = user;
  showLandingPage();
  }).catch((error) => {
- console.log('Login error', error);
+ console.log('Login error:', error);
  alert('Error: ' + error.message);
  });
 }
@@ -78,13 +78,14 @@ function showLandingPage() {
  const landingPageElem = document.getElementById('landing-page');
  const playerNameElem = document.getElementById('player-name');
 
- console.log('Elements:', {
+ console.log('Elements before navigating to landing page:', {
  loginRegisterElem,
  landingPageElem,
  playerNameElem
  });
 
  if (loginRegisterElem && landingPageElem && playerNameElem) {
+ console.log('Navigating to the landing page');
  loginRegisterElem.style.display = 'none';
  landingPageElem.style.display = 'block';
  playerNameElem.textContent = currentUser.getUsername();
@@ -93,6 +94,7 @@ function showLandingPage() {
  console.error('One or more elements not found:', {
  loginRegisterElem,
  landingPageElem,
+ playerNameElem
  });
  }
 }
@@ -102,13 +104,14 @@ function showGame() {
  const gameElem = document.getElementById('game');
  const playerNameGameElem = document.getElementById('player-name-game');
 
- console.log('Elements:', {
+ console.log('Elements before navigating to game page:', {
  landingPageElem,
  gameElem,
  playerNameGameElem
  });
 
  if (landingPageElem && gameElem && playerNameGameElem) {
+ console.log('Navigating to the game page');
  landingPageElem.style.display = 'none';
  gameElem.style.display = 'block';
  playerNameGameElem.textContent = currentUser.getUsername();
@@ -130,6 +133,7 @@ function logout() {
  document.getElementById('login-register').style.display = 'block';
  document.getElementById('landing-page').style.display = 'none';
  document.getElementById('game').style.display = 'none';
+ console.log('User logged out successfully');
  });
 }
 
@@ -147,13 +151,14 @@ function initializeMap() {
  L.marker(pos, { icon: L.divIcon({ className: 'dealer-icon' }) }).addTo(map)
  .bindPopup('Your Location')
  .openPopup();
+ console.log('User location set on map:', pos);
  });
  } else {
  alert('Geolocation is not supported by this browser');
  }
 
  // Initialize Live Query
- liveQueryClient = new Parse.LiveQueryClient({
+ const liveQueryClient = new Parse.LiveQueryClient({
  applicationId: '5i1CFIDqU3wQ6SKcJ6EF1iJnlIt8loChwGOJa7po',
  serverURL: 'wss://multiplayergamebackend.b4a.app',
  javascriptKey: 'GWvzC5pKH2Ka7rgizcRPUqf6xwKuGrZlPE0MC9Uk'
@@ -165,10 +170,12 @@ function initializeMap() {
  subscription.on('create', (marker) => {
  const location = marker.get('location');
  addMarker(location.latitude, location.longitude);
+ console.log('New marker added:', location);
  });
 }
 
 function addMarker(lat, lng) {
  L.marker([lat, lng]).addTo(map);
+ console.log('Marker added at:', { lat, lng });
 }
 
