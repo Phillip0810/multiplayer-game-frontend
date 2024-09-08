@@ -1,0 +1,2 @@
+const users = {}; // Temporary storage
+
