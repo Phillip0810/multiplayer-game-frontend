@@ -1,1 +1,1 @@
-body {\n    font-family: Arial, sans-serif;\n}\n#game {\n    margin-top: 20px;\n}\n#map {\n    border: 1px solid #000;\n}
+body {\n    font-family: Arial, sans-serif;\n}\n#game {\n    margin-top: 20px;\n}\n#map {\n    border: 1px solid #000;\n}\n.leaflet-container {\n    width: 100%;\n    height: 100%;\n    border: 2px solid #aaa;\n}
